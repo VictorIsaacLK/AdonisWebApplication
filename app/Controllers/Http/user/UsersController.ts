@@ -125,8 +125,6 @@ export default class UsersController {
   /////////////////////////////////////////////////////////////////
   public async verifyCode({request, response}: HttpContextContract)
   {
-    /* const user = await User.findOrFail(params.id) */
-    /* console.log(user) */
     const newCodeSchema = schema.create({
       code: schema.string({trim: true, escape: true}, [rules.maxLength(4), rules.minLength(4)])
     });
