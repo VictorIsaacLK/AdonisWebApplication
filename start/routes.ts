@@ -71,3 +71,7 @@ Route.post('/verify/:id', 'user/UsersController.verifyCode').as('verifyCode')
 
 
 Route.post('/login', 'user/UsersController.login').as('login')
+
+Route.group(()=> {
+  Route.get('/logout', 'user/UsersController.logout').as('logout')
+}).middleware(['auth:api'])

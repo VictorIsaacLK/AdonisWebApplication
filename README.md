@@ -9,6 +9,10 @@ set global sql_mode = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,ERROR_FOR_DIVISION
 ----IMPORTANTE: Justo despues de las migraciones, se usa para plantar datos default---
 node ace db:seed
 
+-----MAS COMODO-----------
+node ace migration:refresh --seed
+
+
 ----Para mandar mensaje SMS en el registro-----
 npm install @vonage/server-sdk
 

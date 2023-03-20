@@ -197,7 +197,12 @@ export default class UsersController {
       }
     }
 
+  }
 
+  public async logout({auth, response})
+  {
+    await auth.logout();
+    return response.status(200).send({message: 'Sesión cerrada'})
   }
 
 }
