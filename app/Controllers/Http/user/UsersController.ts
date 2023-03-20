@@ -83,9 +83,6 @@ export default class UsersController {
       ////////////////////////////////////////////////////////////////
       if(signedUrl)
       {
-        /* const url = Env.get('URL_FUENTE') + '/verify?url=' + signedUrl
-        console.log(url)
-        debugger */
         const emailMessage = await new VerifyEmail(user, signedUrl)
         emailMessage.sendLater()
 
@@ -128,8 +125,6 @@ export default class UsersController {
   /////////////////////////////////////////////////////////////////
   public async verifyCode({request, response}: HttpContextContract)
   {
-    /* const user = await User.findOrFail(params.id) */
-    /* console.log(user) */
     const newCodeSchema = schema.create({
       code: schema.string({trim: true, escape: true}, [rules.maxLength(4), rules.minLength(4)])
     });
