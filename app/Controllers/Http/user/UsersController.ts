@@ -83,9 +83,6 @@ export default class UsersController {
       ////////////////////////////////////////////////////////////////
       if(signedUrl)
       {
-        /* const url = Env.get('URL_FUENTE') + '/verify?url=' + signedUrl
-        console.log(url)
-        debugger */
         const emailMessage = await new VerifyEmail(user, signedUrl)
         emailMessage.sendLater()
 
