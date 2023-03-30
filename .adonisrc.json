@@ -36,7 +36,8 @@
     "@adonisjs/lucid",
     "@adonisjs/auth",
     "@adonisjs/mail",
-    "@adonisjs/view"
+    "@adonisjs/view",
+    "@adonisjs/shield"
   ],
   "aceProviders": [
     "@adonisjs/repl"
