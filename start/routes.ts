@@ -19,6 +19,7 @@
 */
 
 import Route from '@ioc:Adonis/Core/Route'
+import PartidasController from '../app/Controllers/Http/PartidasController';
 
 Route.get('/', async () => {
   return { hello: 'world' }
@@ -78,3 +79,4 @@ Route.group(()=> {
 
 
 Route.get('/traer-tablero', 'TableroJuegosController.generarTablero').as('tablero')
+Route.post('/ataque', 'PartidasController.enviarAtaque').as('ataque')
