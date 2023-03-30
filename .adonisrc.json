@@ -23,12 +23,7 @@
         "web"
       ]
     },
-    {
-      "file": "./start/events",
-      "environment": [
-        "web"
-      ]
-    }
+    "./start/events"
   ],
   "providers": [
     "./providers/AppProvider",

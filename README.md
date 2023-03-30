@@ -19,3 +19,10 @@ npm install @vonage/server-sdk
 
 ----Comentar cosas en español---
 Shift + Alt + A
+
+
+//notas para mi
+incluir el shield en el kernel.ts
+modificar el events.ts
+modificar el listener
+node ace make:listener 

@@ -1,5 +1,6 @@
 // import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import Event from '@ioc:Adonis/Core/Event'
 
 export default class TableroJuegosController
 {
@@ -26,4 +27,6 @@ export default class TableroJuegosController
     return response.json({ mar })
 
   }
+
+
 }
