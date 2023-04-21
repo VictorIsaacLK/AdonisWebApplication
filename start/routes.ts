@@ -79,5 +79,14 @@ Route.group(()=> {
 
 
 Route.post('/iniciarPartida', 'PartidasController.iniciarPartida').as('iniciarPartida')
-Route.get('/traer-tablero/:id', 'TableroJuegosController.generarTablero').as('tablero')
+Route.get('/traer-tablero', 'TableroJuegosController.generarTablero').as('tablero')
+//Route.get('/traer-tablero/:id', 'TableroJuegosController.generarTablero').as('tablero')
 Route.post('/ataque', 'PartidasController.emitirAtaque').as('ataque')
+
+Route.post('/ataquePRUEBA', 'PartidasController.enviarAtaque').as('ataqueprueba')
+
+
+Route.get('/events', 'SsesController.events').middleware('seeMid')
+
+Route.get('/gameboard', 'PruebasController.index')
+Route.post('/gameboard/attack', 'PruebasController.attack')

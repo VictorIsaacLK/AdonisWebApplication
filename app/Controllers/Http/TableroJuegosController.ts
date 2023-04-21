@@ -15,12 +15,39 @@ export default class TableroJuegosController
       return [row, col]
     }
 
-    let barcosUsados = 0
-    while (barcosUsados < 30) {
+    let barcosUsadosX = 0
+    let barcosUsadosY = 0
+
+    while (barcosUsadosX < 15 && barcosUsadosY < 15) {
       const [row, col] = posicionRandom()
       if (mar[row][col] === 'O') {
-        mar[row][col] = 'X'
-        barcosUsados++
+        if (barcosUsadosX < 15) {
+          mar[row][col] = 'X'
+          barcosUsadosX++
+        } else {
+          mar[row][col] = 'Y'
+          barcosUsadosY++
+        }
+      }
+    }
+
+    if (barcosUsadosX < 15) {
+      while (barcosUsadosX < 15) {
+        const [row, col] = posicionRandom()
+        if (mar[row][col] === 'O') {
+          mar[row][col] = 'X'
+          barcosUsadosX++
+        }
+      }
+    }
+
+    if (barcosUsadosY < 15) {
+      while (barcosUsadosY < 15) {
+        const [row, col] = posicionRandom()
+        if (mar[row][col] === 'O') {
+          mar[row][col] = 'Y'
+          barcosUsadosY++
+        }
       }
     }
 
@@ -32,6 +59,5 @@ export default class TableroJuegosController
     return response.json({ mar })
 
   }
-
 
 }
