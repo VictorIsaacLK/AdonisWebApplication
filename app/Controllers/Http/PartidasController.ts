@@ -2,33 +2,29 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 // import Event from '@ioc:Adonis/Core/Event'
 // import Tablero from '../../Models/Tablero';
-import { schema, rules } from '@ioc:Adonis/Core/Validator';
+import { schema , rules } from '@ioc:Adonis/Core/Validator';
 import Partida from 'App/Models/Partida';
 
 export default class PartidasController
 {
 
-  public async iniciarPartida({request, response})
+  public async iniciarPartida({request, response}: HttpContextContract)
   {
     const newSchemaUsers = schema.create({
-      user_one_id: schema.number([rules.required]),
-      user_two_id: schema.number([rules.required]),
+      user_one: schema.number([rules.required()]),
+      user_two: schema.number([rules.required()])
     })
 
-    const payload = await request.validate({
-      schema: newSchemaUsers,
-      message: {
-        'user_one_id.required':'El usuario 1 es requerido',
-        'user_two_id':'El usuario 2 es requerido'
-      }
+    const payload = await request.validate
+    ({
+      schema: newSchemaUsers
     })
 
-    const partidaNueva = new Partida()
-    partidaNueva.user_one = payload['user_one_id']
-    partidaNueva.user_two = payload['user_two_id']
+    const partidaNueva = await Partida.create(payload)
     partidaNueva.save()
 
     console.log('iniciarPartida')
+    return response.json({info: partidaNueva})
   }
 
   public async emitirAtaque({ response, request }: HttpContextContract) {

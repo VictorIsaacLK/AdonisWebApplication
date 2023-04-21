@@ -78,6 +78,6 @@ Route.group(()=> {
 }).middleware(['auth:api'])
 
 
-Route.get('/iniciarPartida', 'PartidasController.iniciarPartida').as('iniciarPartida')
+Route.post('/iniciarPartida', 'PartidasController.iniciarPartida').as('iniciarPartida')
 Route.get('/traer-tablero/:id', 'TableroJuegosController.generarTablero').as('tablero')
 Route.post('/ataque', 'PartidasController.emitirAtaque').as('ataque')
