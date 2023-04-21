@@ -3,7 +3,10 @@ import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 // import Event from '@ioc:Adonis/Core/Event'
 // import Tablero from '../../Models/Tablero';
 import { schema , rules } from '@ioc:Adonis/Core/Validator';
+import Ataque from 'App/Models/Ataque';
 import Partida from 'App/Models/Partida';
+import Tablero from 'App/Models/Tablero';
+import User from 'App/Models/user/User';
 
 export default class PartidasController
 {
@@ -197,6 +200,86 @@ export default class PartidasController
       return response.json({ exitoso: false, mensaje: 'No hay un barco en las coordenadas especificadas' })
     }
 
+  }
+
+  public async enviarAtaquePlus({ auth, request, response, params }: HttpContextContract) {
+    //const user = auth.user;
+    const user = await User.findBy('id', params.id)
+
+    const partidaSchema = schema.create({
+      partidaId: schema.number(),
+      numero: schema.number(),
+      letra: schema.string({ trim: true }),
+    });
+
+    const payload = await request.validate({
+      schema: partidaSchema,
+      messages: {
+        "partidaId.required": "El id de partida es requerido",
+        "numero.required": "El numero es requerido",
+        "letra.required": "La letra es requerida",
+      },
+    });
+
+    const partidaId = payload["partidaId"];
+    const partida = await Partida.find(partidaId);
+
+    if (!partida) {
+      return response.status(404).json({ mensaje: "Partida no encontrada" });
+    }
+
+
+    if (partida.turno_id !== user?.id) {
+      return response.status(403).json({ mensaje: "No es tu turno" });
+    }
+
+
+    //funciona hasta aqui
+
+    const tablero = await Tablero.query().where("partida_id", "=", partidaId).firstOrFail();
+
+    const lettersToNumbers = {
+      a: 0,
+      b: 1,
+      c: 2,
+      d: 3,
+      e: 4,
+      f: 5,
+      g: 6,
+      h: 7,
+    };
+
+    const letra = payload["letra"];
+    const letraConvertidaNumero = lettersToNumbers[letra.toLowerCase()];
+    const numero = payload["numero"];
+
+    const mar = JSON.parse(tablero.mar);
+
+    const ataque = new Ataque();
+    ataque.partidaId = partidaId;
+    ataque.atacanteId = user.id;
+    ataque.targetX = letra;
+    ataque.targetY = letraConvertidaNumero;
+
+    if (mar[letraConvertidaNumero][numero] === "X") {
+      ataque.huboGolpe = true;
+      await ataque.save();
+
+      // Cambiar turno
+      partida.turno_id = partida.userOne === user.id ? partida.userTwo : partida.userOne;
+      await partida.save();
+
+      return response.json({ exitoso: true, mensaje: "Ataque exitoso" });
+    } else {
+      ataque.huboGolpe = false;
+      await ataque.save();
+
+      // Cambiar turno
+      partida.turno_id = partida.userOne === user.id ? partida.userTwo : partida.userOne;
+      await partida.save();
+
+      return response.json({ exitoso: false, mensaje: "No hay un barco en las coordenadas especificadas" });
+    }
   }
 
 

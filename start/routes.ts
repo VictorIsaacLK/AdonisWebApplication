@@ -90,3 +90,5 @@ Route.get('/events', 'SsesController.events').middleware('seeMid')
 
 Route.get('/gameboard', 'PruebasController.index')
 Route.post('/gameboard/attack', 'PruebasController.attack')
+
+Route.post('/misil/:id', 'PartidasController.enviarAtaquePlus')

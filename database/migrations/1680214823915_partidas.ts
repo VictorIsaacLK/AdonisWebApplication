@@ -11,9 +11,11 @@ export default class extends BaseSchema {
       table.integer('user_two').unsigned().notNullable()
       table.foreign('user_two').references('id').inTable('users')
       table.integer('ganador_id ').unsigned().nullable()
+      table.foreign('ganador_id').references('id').inTable('users')
       table.dateTime('empezo_a')
       table.dateTime('termino_a')
-      table.foreign('ganador_id').references('id').inTable('users')
+      table.integer('turno_id').unsigned()
+      table.foreign('turno_id').references('id').inTable('users')
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL
        */
